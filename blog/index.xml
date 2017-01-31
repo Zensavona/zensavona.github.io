@@ -101,6 +101,29 @@ export class App {
     </item>
     
     <item>
+      <title>How To Make The Elixir Shell (IEX) Save History</title>
+      <link>https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history</link>
+      <pubDate>Sat, 14 Nov 2015 12:46:52 +1100</pubDate>
+      
+      <guid>https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history</guid>
+      <description>&lt;p&gt;&lt;p&gt;If you&#39;ve ever used &lt;code&gt;irb&lt;/code&gt;, &lt;code&gt;node&lt;/code&gt; or pretty much any other command line REPL, you probably really miss being able to use the up and down keys to recall your last commands from a previous session in &lt;code&gt;iex&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Today I discovered &lt;a href=&#34;https://github.com/ferd/erlang-history&#34;&gt;a package&lt;/a&gt; which hacks this functionality into the Erlang shell, and thus also works for Elixir.&lt;/p&gt;
+
+&lt;p&gt;It&#39;s very simple to install:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git@github.com:ferd/erlang-history.git  
+cd erlang-history  
+make install  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that you may need to run the last line as &lt;code&gt;sudo make install&lt;/code&gt; depending how and where you installed Erlang/Elixir. I needed to do this, and I installed Erlang with Homebrew on OS X.&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>How To Make Developers Like You (For Recruiters)</title>
       <link>https://zen.id.au/how-to-make-developers-like-you-for-recruiters</link>
       <pubDate>Sat, 31 Oct 2015 12:46:52 +1100</pubDate>
@@ -617,30 +640,6 @@ end
 &lt;/ul&gt;
 
 &lt;h4 id=&#39;now_stop_sipping_soy_lattes_in_a_cafe_behind_your_macbook_reading_hacker_news_and_pondering_which_company_you_want_your_shitty_little_insignificant_thing_to_be_acquired_by_and_build_something_&#39;&gt;Now stop sipping soy lattes in a cafe behind your Macbook, reading Hacker News and pondering which company you want your shitty little insignificant thing to be acquired by, and build something &lt;i&gt;which makes people&#39;s fucking jaw drop&lt;/i&gt;&lt;/h4&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Why working is a scam</title>
-      <link>https://zen.id.au/why-working-is-a-scam</link>
-      <pubDate>Fri, 06 Apr 2012 12:46:52 +1100</pubDate>
-      
-      <guid>https://zen.id.au/why-working-is-a-scam</guid>
-      <description>&lt;p&gt;In Australia, the average life expectency is 81. Let&amp;#8217;s assume for a moment that a person starts working full time at 21 and retires at 60, this is assuming you are earning an above average salary (the &amp;#8220;retirement age&amp;#8221; in Australia is actually 65). This means you will work full time for 39 years. If you average 4 full work days per week over your working life, you will have spent just &lt;strong&gt;over 22 years&lt;/strong&gt; at work.&lt;/p&gt;
-
-&lt;h3 id=&#39;why_do_we_do_this&#39;&gt;Why do we do this?&lt;/h3&gt;
-
-&lt;p&gt;Unless you are an exception and absolutely love your 9-5 job, you are effectively wasting &lt;strong&gt;over a quarter of your life&lt;/strong&gt; doing something purely to survive. When it&amp;#8217;s put that way, that $100k you earn (if you&amp;#8217;re lucky) sounds pretty unattractive, doesn&amp;#8217;t it? I mean, if you&amp;#8217;re working for your self there is the potential to earn so much more - and that&amp;#8217;s not even the best part&amp;#8230; &lt;strong&gt;Working for yourself frees you from so many restrictions&lt;/strong&gt;. Want to take that 7 day trip to Melbourne? Go for it, just take your laptop along and put in a couple of hours a night in your hotel room. Want to backpack across South East Asia? Go for it!. You can be living any kind of life you want, while your friends are stuck in the office watching the clock and planning their weekend.&lt;/p&gt;
-
-&lt;h3 id=&#39;its_not_for_everyone&#39;&gt;It&amp;#8217;s not for everyone&lt;/h3&gt;
-
-&lt;p&gt;If you are happy with your corporate job, good for you. The point of this post is not to tell everyone what they should do, but to point out that if you are not happy doing what you&amp;#8217;re currently doing, &lt;strong&gt;don&amp;#8217;t just suck it up, do something else&lt;/strong&gt; because right now, especially in IT, if your business idea fucks up, there are plenty of other jobs. The days of working with one company and scaling up the corporate ladder until you reach your comfortable seat on a high branch are over.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Just be prepared for a long and often uncertain journey. The good stuff doesn&amp;#8217;t come easy. &lt;i&gt;(Tim Westergren, Pandora)&lt;/i&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Now stop being lazy and go take some risks, &lt;strong&gt;because if you fail, at least you can say you tried&lt;/strong&gt;.&lt;/p&gt;
 </description>
     </item>
     

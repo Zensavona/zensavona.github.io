@@ -6,8 +6,73 @@
     <description>Recent content on Zen Savona</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-au</language>
-    <lastBuildDate>Thu, 17 Mar 2016 12:46:52 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 02 Oct 2016 22:55:05 -0400</lastBuildDate>
     <atom:link href="https://zen.id.au/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Now</title>
+      <link>https://zen.id.au/now/</link>
+      <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
+      
+      <guid>https://zen.id.au/now/</guid>
+      <description>&lt;section id=&#34;projects&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;h3&gt;Stuff I&#39;m working on now&lt;/h3&gt;
+    &lt;div class=&#34;panel panel-default&#34;&gt;
+      &lt;div class=&#34;panel-body&#34;&gt;
+      &lt;!--
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-github&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 1&lt;/a&gt;&lt;/strong&gt;
+        - Ei viderer tacimates pro, quem assum ea nam. Veritus omnesque eam te. Et natum mucius tamquam vel,
+        ea dolorem volumus deterruisset nec. Graeci mentitum sea an, eu prima elaboraret est.
+      &lt;/h5&gt;
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-github&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 2&lt;/a&gt;&lt;/strong&gt;
+        - An eripuit phaedrum qui, nec facer splendide ex, vel ea assum facilisi convenire.
+        Te his neglegentur consectetuer.
+      &lt;/h5&gt;
+        &lt;h5&gt;
+        &lt;i class=&#34;fa fa-github&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 3&lt;/a&gt;&lt;/strong&gt;
+        - An alii quot tantas eum, doming platonem persecuti mea et, vim perpetua cotidieque delicatissimi in.
+      &lt;/h5&gt;
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-globe&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 4&lt;/a&gt;&lt;/strong&gt;
+        - Vim an case vidit sententiae, est at euismod laboramus efficiantur. Ei sit brute lorem,
+        ea eam timeam viderer aliquid, cu integre omittam moderatius quo.
+      &lt;/h5&gt;
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-globe&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 5&lt;/a&gt;&lt;/strong&gt;
+        - Dicta causae meliore ex vel, in vix erant integre petentium. Vix ei nisl scripta recusabo,
+        eam doming blandit facilisis.
+      &lt;/h5&gt;
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-cog&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 6&lt;/a&gt;&lt;/strong&gt;
+        - Inermis recusabo elaboraret mea et, dicat neglegentur vim te. Nec et sanctus scriptorem,
+        usu ex sapientem gubergren. Tamquam admodum ei usu.
+      &lt;/h5&gt;
+      &lt;h5&gt;
+        &lt;i class=&#34;fa fa-cog&#34;&gt;&lt;/i&gt;&amp;nbsp;&amp;nbsp;&lt;strong&gt;&lt;a href=&#34;#&#34;&gt;Project 7&lt;/a&gt;&lt;/strong&gt;
+        - Essent putant indoctum sed in, reprimique persequeris neglegentur te quo. Nam rebum
+        tractatos partiendo at, debet ubique oporteat ut his.
+      &lt;/h5&gt;
+      --&gt;
+
+      &lt;p&gt;&lt;p&gt;Right now (Jan 2017) I&#39;m living in Melbourne.&lt;/p&gt;
+
+      &lt;h5&gt;Current projects:&lt;/h5&gt;
+
+      &lt;ul&gt;
+      &lt;li&gt;A large scale online billing platform for the Australian telecommunications industry. I&#39;m working on the frontend, which uses React and Aurelia&gt;.&lt;/li&gt;
+      &lt;li&gt;An e-juice business with a friend of mine, making our own custom flavours. Launching next month.&lt;/li&gt;
+      &lt;li&gt;Polishing some Aurelia and Phoenix tutorials for the blog which are half baked.&lt;/li&gt;
+      &lt;/ul&gt;&lt;/p&gt;
+
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</description>
+    </item>
     
     <item>
       <title>Using Aurelia and Redux together for good times all around</title>
@@ -97,6 +162,29 @@ export class App {
 &lt;p&gt;Because we&#39;re Dependency Injecting the store with &lt;code&gt;@inject&lt;/code&gt;, we can do this in many different ViewModels and know we&#39;re getting the same instance everywhere, meaning we can just &lt;code&gt;store.subscribe()&lt;/code&gt; and &lt;code&gt;store.dispatcher.dispatch()&lt;/code&gt; in many places and know everything is talking to the same &lt;code&gt;store&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Let me know if you found this easy to follow or have any questions, I&#39;ve only recently started writing these kinds of quick tip blog posts!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How To Make The Elixir Shell (IEX) Save History</title>
+      <link>https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history</link>
+      <pubDate>Sat, 14 Nov 2015 12:46:52 +1100</pubDate>
+      
+      <guid>https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history</guid>
+      <description>&lt;p&gt;&lt;p&gt;If you&#39;ve ever used &lt;code&gt;irb&lt;/code&gt;, &lt;code&gt;node&lt;/code&gt; or pretty much any other command line REPL, you probably really miss being able to use the up and down keys to recall your last commands from a previous session in &lt;code&gt;iex&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Today I discovered &lt;a href=&#34;https://github.com/ferd/erlang-history&#34;&gt;a package&lt;/a&gt; which hacks this functionality into the Erlang shell, and thus also works for Elixir.&lt;/p&gt;
+
+&lt;p&gt;It&#39;s very simple to install:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git@github.com:ferd/erlang-history.git  
+cd erlang-history  
+make install  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that you may need to run the last line as &lt;code&gt;sudo make install&lt;/code&gt; depending how and where you installed Erlang/Elixir. I needed to do this, and I installed Erlang with Homebrew on OS X.&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -555,92 +643,6 @@ end
 &lt;p&gt;Just food for thought, but with OS X becoming more and more ‘iOS-y’ and the rise of Windows 8 touchscreen laptops (a la Lenovo Yoga 13) this would make a whole lot of sense, wouldn’t it?&lt;/p&gt;
 
 &lt;p&gt;Let me know what you think.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Get your shit together, people</title>
-      <link>https://zen.id.au/get-your-shit-together-people</link>
-      <pubDate>Mon, 03 Sep 2012 12:46:52 +1100</pubDate>
-      
-      <guid>https://zen.id.au/get-your-shit-together-people</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Disclaimer: I live in Brisbane, Australia. My only real window to what is happening in silicon valley is HN and the blogs of various founders and VCs from the valley. If my assumptions are completely wrong, please do let me know.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#39;shitty_products&#39;&gt;Shitty products&lt;/h2&gt;
-
-&lt;p&gt;Right now in the world there are so many talented and skilled developers - why are so many of us working on such shitty, menial ideas? I mean there are exceptions - but it also seems like there are &lt;i&gt;so many&lt;/i&gt; people working on &lt;i&gt;really stupid things&lt;/i&gt;. No, I &lt;i&gt;don&#39;t&lt;/i&gt; want to sign up to your bootstrap themed product which looks like it was thrown together in a week and performs no valuable purpose to my daily life (which I can&amp;#8217;t replicate more elegantly with a text file). It seems like we are becoming so intent on &amp;#8216;shipping&amp;#8217; &lt;i&gt;something&lt;/i&gt;, that we are willing to throw &lt;i&gt;anything&lt;/i&gt; out there and hope that by chance, we make something that &lt;i&gt;someone, somewhere&lt;/i&gt; wants.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#39;http://mariusandra.com/blog/2012/08/stop-producing-shit/&#39;&gt;This article&lt;/a&gt; by &lt;a href=&#39;http://mariusandra.com/&#39;&gt;Marius Andra&lt;/a&gt; really struck a chord with me and somewhat inspired this post.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A friend of mine is starting what can only be described as a combination of Facebook, Groupon, LinkedIn and Foursquare. He’s super excited and hasn’t talked to any potential customers yet.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;I know a guy whose startup pivots twice a year, each time hoping to solve a problem that’s not really there. Now they’re cloning Yammer.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Some other guys had an idea, received validation from two potential clients, raised funding, hired a lot of people, built a product and discovered nobody really wants to pay for it.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Here&amp;#8217;s a thought, spend more time on something which you know is great, and launch it with polish. Don&amp;#8217;t ship your &lt;i&gt;shitty, half baked product&lt;/i&gt; - launch it well and give people something to gasp at. Until then, keep thinking.&lt;/p&gt;
-
-&lt;h2 id=&#39;the_startup_romantic_era&#39;&gt;The startup &amp;#8220;romantic era&amp;#8221;&lt;/h2&gt;
-
-&lt;p&gt;We are treating business like it&amp;#8217;s a fucking &lt;i&gt;art form&lt;/i&gt;. If you haven&amp;#8217;t already seen this, read a couple of posts on &lt;a href=&#39;http://doublestealth.blogspot.com/&#39;&gt;Double Stealth&lt;/a&gt;, if this sounds anything like you, go find a mirror, look into it for a long time and seriously thing about what you doing.&lt;/p&gt;
-
-&lt;p&gt;Remember this: business is about selling things to people. People are just like you - if you are working on something which you would not personally &lt;strong&gt;stand outside in the cold for a couple of hours to pay money for&lt;/strong&gt;, you&amp;#8217;re probably doing it wrong (Well, not quite to that extent, but I&amp;#8217;m sure you know what I mean).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#39;http://www-bgr-com.vimg.net/wp-content/uploads/2012/01/beijingchina-iphone-4s-launch.jpeg&#39; alt=&#39;People waiting to buy some cool-ass shiny Apple shit&#39; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The other thing to remember is that most consumers &lt;i&gt;do not really care&lt;/i&gt; about (or understand) how your product is &lt;i&gt;slightly better&lt;/i&gt; in some way than what they use right now - for them, it&amp;#8217;s much easier to stick with writing shit down on a piece of paper than figure out how to use your swanky web-based AJAXy responsive &amp;#8216;disruptive&amp;#8217; to-do list which syncs between multiple devices and uses local storage for fast access to data.&lt;/p&gt;
-
-&lt;p&gt;Give them something they are &lt;strong&gt;genuinely amazed by&lt;/strong&gt; - I remember when I first saw an iPhone 3G in the flesh (the original iPhone was never released in Australia). My friend came over to my place one afternoon and showed me this new phone of his (at the time I had one of &lt;a href=&#39;http://en.wikipedia.org/wiki/HTC_TyTN_II&#39;&gt;these babies&lt;/a&gt;, a HTC TyTN II) I had never used a capacitive touchscreen before and thought it was &lt;strong&gt;fucking magical&lt;/strong&gt;. Needless to say, I went and bought one as soon as my high-school job allowed me to.&lt;/p&gt;
-
-&lt;p&gt;The moral of the story is that you need to make products which make people do &lt;i&gt;that&lt;/i&gt;. Build something so awesome that it sells itself, I had never seen an Apple commercial or read the tech-specs - but after playing with it in my hands for a couple of minutes I was absolutely sold.&lt;/p&gt;
-
-&lt;p&gt;Some more examples of products like this&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#39;http://github.com/&#39;&gt;Github&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&#39;http://heroku.com/&#39;&gt;Heroku&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&#39;http://gmail.com/&#39;&gt;Gmail&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&#39;http://spotify.com/&#39;&gt;Spotify&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&#39;http://dropbox.com/&#39;&gt;Dropbox&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#39;now_stop_sipping_soy_lattes_in_a_cafe_behind_your_macbook_reading_hacker_news_and_pondering_which_company_you_want_your_shitty_little_insignificant_thing_to_be_acquired_by_and_build_something_&#39;&gt;Now stop sipping soy lattes in a cafe behind your Macbook, reading Hacker News and pondering which company you want your shitty little insignificant thing to be acquired by, and build something &lt;i&gt;which makes people&#39;s fucking jaw drop&lt;/i&gt;&lt;/h4&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Why working is a scam</title>
-      <link>https://zen.id.au/why-working-is-a-scam</link>
-      <pubDate>Fri, 06 Apr 2012 12:46:52 +1100</pubDate>
-      
-      <guid>https://zen.id.au/why-working-is-a-scam</guid>
-      <description>&lt;p&gt;In Australia, the average life expectency is 81. Let&amp;#8217;s assume for a moment that a person starts working full time at 21 and retires at 60, this is assuming you are earning an above average salary (the &amp;#8220;retirement age&amp;#8221; in Australia is actually 65). This means you will work full time for 39 years. If you average 4 full work days per week over your working life, you will have spent just &lt;strong&gt;over 22 years&lt;/strong&gt; at work.&lt;/p&gt;
-
-&lt;h3 id=&#39;why_do_we_do_this&#39;&gt;Why do we do this?&lt;/h3&gt;
-
-&lt;p&gt;Unless you are an exception and absolutely love your 9-5 job, you are effectively wasting &lt;strong&gt;over a quarter of your life&lt;/strong&gt; doing something purely to survive. When it&amp;#8217;s put that way, that $100k you earn (if you&amp;#8217;re lucky) sounds pretty unattractive, doesn&amp;#8217;t it? I mean, if you&amp;#8217;re working for your self there is the potential to earn so much more - and that&amp;#8217;s not even the best part&amp;#8230; &lt;strong&gt;Working for yourself frees you from so many restrictions&lt;/strong&gt;. Want to take that 7 day trip to Melbourne? Go for it, just take your laptop along and put in a couple of hours a night in your hotel room. Want to backpack across South East Asia? Go for it!. You can be living any kind of life you want, while your friends are stuck in the office watching the clock and planning their weekend.&lt;/p&gt;
-
-&lt;h3 id=&#39;its_not_for_everyone&#39;&gt;It&amp;#8217;s not for everyone&lt;/h3&gt;
-
-&lt;p&gt;If you are happy with your corporate job, good for you. The point of this post is not to tell everyone what they should do, but to point out that if you are not happy doing what you&amp;#8217;re currently doing, &lt;strong&gt;don&amp;#8217;t just suck it up, do something else&lt;/strong&gt; because right now, especially in IT, if your business idea fucks up, there are plenty of other jobs. The days of working with one company and scaling up the corporate ladder until you reach your comfortable seat on a high branch are over.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Just be prepared for a long and often uncertain journey. The good stuff doesn&amp;#8217;t come easy. &lt;i&gt;(Tim Westergren, Pandora)&lt;/i&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Now stop being lazy and go take some risks, &lt;strong&gt;because if you fail, at least you can say you tried&lt;/strong&gt;.&lt;/p&gt;
 </description>
     </item>
     

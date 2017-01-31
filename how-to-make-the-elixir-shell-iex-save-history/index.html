@@ -7,7 +7,7 @@
     <meta name="author" content="map[]" />
     <meta name="description" content="Zen&#39;s personal site and blog">
     <link rel="shortcut icon" type="image/x-icon" href="https://zen.id.au/img/favicon.ico">
-    <title>Parallelise external API calls with Elixir to make them super fast</title>
+    <title>How To Make The Elixir Shell (IEX) Save History</title>
     <meta name="generator" content="Hugo 0.18.1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://zen.id.au/css/main.css" />
@@ -59,12 +59,12 @@ ga('send', 'pageview');
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="https://zen.id.au/parallelise-external-api-calls-with-elixir-to-make-them-super-fast">Parallelise external API calls with Elixir to make them super fast</a></strong>
+            <strong><a href="https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history">How To Make The Elixir Shell (IEX) Save History</a></strong>
           </h3>
         </div>
         <div class="blog-title">
           <h4>
-          October 26, 2015
+          November 14, 2015
             &nbsp;&nbsp;
             
           </h4>
@@ -72,32 +72,20 @@ ga('send', 'pageview');
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="blogpost">
-              <p><p>I'm working on a Phoenix application which uses the Instagram API via the <a href="https://github.com/zensavona/elixtagram">Elixtagram library</a>. There is a particular page where I need to display a bunch of users who need to be retrieved from the API... Here's the "before" (sequential) code:</p>
+              <p><p>If you've ever used <code>irb</code>, <code>node</code> or pretty much any other command line REPL, you probably really miss being able to use the up and down keys to recall your last commands from a previous session in <code>iex</code>.</p>
 
-<pre><code>def users_list(%Account{favourite_users: users}) do  
-  Elixtagram.configure
-  users
-  |&gt; Enum.map(fn(u) -&gt; Elixtagram.user(u.ig_id).username end)
-  |&gt; Enum.join(", ")
-end  
+<p>Today I discovered <a href="https://github.com/ferd/erlang-history">a package</a> which hacks this functionality into the Erlang shell, and thus also works for Elixir.</p>
+
+<p>It's very simple to install:</p>
+
+<pre><code>git clone git@github.com:ferd/erlang-history.git  
+cd erlang-history  
+make install  
 </code></pre>
 
-<p>What I'm doing here is simply passing in a list of Instagram IDs and returning a string of comma separated usernames. The obvious problem here is that Elixtagram is making an API call which can take some relatively large amount of milliseconds, and it's silly to wait for each one to finish before starting the next one, especially when we're using a language with such easily accessible concurrency as Elixir.</p>
+<p>Note that you may need to run the last line as <code>sudo make install</code> depending how and where you installed Erlang/Elixir. I needed to do this, and I installed Erlang with Homebrew on OS X.</p>
 
-<p>Here's the "fixed" code:</p>
-
-<pre><code>def users_list(%Account{favourite_users: users}) do  
-  Elixtagram.configure
-  users
-  |&gt; Enum.map(fn(u) -&gt; Task.async(fn -&gt; Elixtagram.user(u.ig_id).username end) end)
-  |&gt; Enum.map(&amp;Task.await/1)
-  |&gt; Enum.join(", ")
-end  
-</code></pre>
-
-<p>The difference here is that instead of blocking for each request in the <code>Enum.map</code>, I'm filling the list up with async tasks, which I then wait for on the next line. What this means is that the amount of requests we make here has little impact on the performance of the code (until we saturate the network...).</p>
-
-<p>Good luck with your concurrency adventures, friends!</p></p>
+<p>Enjoy!</p></p>
 
               <hr>
               <div class="related-posts">

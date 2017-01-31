@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zen.id.au/now/</loc>
+    <lastmod>2016-10-02T22:55:05-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zen.id.au/using-aurelia-and-redux-together-for-good-times-all-around</loc>
     <lastmod>2016-03-17T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/how-to-make-the-elixir-shell-iex-save-history</loc>
+    <lastmod>2015-11-14T12:46:52+11:00</lastmod>
   </url>
   
   <url>
@@ -83,8 +93,19 @@
   </url>
   
   <url>
+    <loc>https://zen.id.au/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/categories/now/</loc>
+    <lastmod>2016-10-02T22:55:05-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zen.id.au/</loc>
-    <lastmod>2016-03-17T12:46:52+11:00</lastmod>
+    <lastmod>2016-10-02T22:55:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
