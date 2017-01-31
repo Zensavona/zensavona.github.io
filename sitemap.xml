@@ -2,7 +2,89 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zen.id.au/using-aurelia-and-redux-together-for-good-times-all-around</loc>
+    <lastmod>2016-03-17T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/how-to-make-developers-like-you-for-recruiters</loc>
+    <lastmod>2015-10-31T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/parallelise-external-api-calls-with-elixir-to-make-them-super-fast</loc>
+    <lastmod>2015-10-26T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/i-have-impacted-the-lives-of-87k-developers</loc>
+    <lastmod>2015-06-28T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/how-to-manage-multiple-domains--subdomains-with-rails-4-on-heroku</loc>
+    <lastmod>2015-05-06T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/anomie</loc>
+    <lastmod>2015-03-05T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/chiang-mai</loc>
+    <lastmod>2015-01-29T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/belgium-part-2</loc>
+    <lastmod>2014-07-18T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/belgium</loc>
+    <lastmod>2014-06-16T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/feeling-understood</loc>
+    <lastmod>2013-10-21T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/github-for-government</loc>
+    <lastmod>2013-01-21T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/on-trust</loc>
+    <lastmod>2012-12-17T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/how-long-till-apple-makes-a-touchscreen-imac</loc>
+    <lastmod>2012-12-08T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/get-your-shit-together-people</loc>
+    <lastmod>2012-09-03T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/why-working-is-a-scam</loc>
+    <lastmod>2012-04-06T12:46:52+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/blog/</loc>
+    <lastmod>2016-03-17T12:46:52+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zen.id.au/</loc>
+    <lastmod>2016-03-17T12:46:52+11:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-au">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="map[]" />
+    <meta name="description" content="Zen&#39;s personal site and blog">
+    <link rel="shortcut icon" type="image/x-icon" href="https://zen.id.au/img/favicon.ico">
+    <title>Using Aurelia and Redux together for good times all around</title>
+    <meta name="generator" content="Hugo 0.18.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://zen.id.au/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-16059324-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="https://zen.id.au/"><i class="fa fa-home"></i></a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="https://zen.id.au/using-aurelia-and-redux-together-for-good-times-all-around">Using Aurelia and Redux together for good times all around</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          March 17, 2016
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              <p>Since playing with <a href="https://facebook.github.io/react/">React</a> and <a href="https://redux.js.org/">Redux</a> I've really missed the separation of data flow and view logic this affords when working with <a href="https://aurelia.io/">Aurelia</a> - in my opinion a fantastic framework to work with, but lacks data management features out-of-the-box. But alas, Redux to the rescue!</p>
+
+<p>I'm going to show you how to use Redux with Aurelia in a pretty simple example with config for <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en">Redux Chrome DevTools</a>, <a href="https://github.com/fcomb/redux-logger">redux-logger</a> and <a href="https://github.com/gaearon/redux-thunk">redux-thunk</a>. Basically we're going to create a store and DI it everywhere, just like how in a React app you'd inject it through the router or create some kind of global. This assumes basic familiarity with Redux and Aurelia and the code can be found <a href="">here</a>.</p>
+
+<p>First, let's install all the bits we need:  </p>
+
+<pre><code>npm install --save redux redux-logger redux-thunk
+</code></pre>
+
+<p>FWIW I am using: <br />
+aurelia-* beta 1 <br />
+redux 3.3.1 <br />
+redux-logger 2.6.1 <br />
+redux-thunk 2.0.1</p>
+
+<p>Nice, now let's make a new file called <code>store.js</code> and put all our Redux code there. Normally I like to make a folder for all of this and break it up, but for the purpose of this example we'll keep it together.</p>
+
+<pre>
+<code data-language="js">import { createStore, applyMiddleware, compose } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+
+const loggerMiddleware = createLogger();
+
+const sessionReducer = (state = {
+  error: null,
+  loggedIn: false
+}, action) => {
+  switch (action.type) {
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        loggedIn: true,
+        error: null
+      };
+    case 'LOGIN_FAILURE':
+      return {
+        ...state,
+        loggedIn: false,
+        error: action.error
+      };
+    default:
+      return state;
+  }
+};
+
+function configureStore() {
+  return createStore(
+    sessionReducer, // or combine some reducers
+    compose(
+      applyMiddleware(
+        thunkMiddleware,
+        loggerMiddleware
+      ),
+      window.devToolsExtension ? window.devToolsExtension() : undefined
+    )
+  )
+}
+
+export const reduxStore = configureStore();
+</code></pre>
+
+<p>Now let&rsquo;s go over to our <code>app.js</code> (or whatever your root ViewModel is) and DI it in:</p>
+
+<pre>
+<code data-language="js">import {inject} from 'aurelia-framework';
+import {reduxStore} from 'store';
+
+@inject(reduxStore)
+export class App {
+  constructor(store) {
+    this.store = store;
+    this.store.dispatch({type: 'LOGIN_FAILURE', error: 'Oops! Wrong password matey.'});
+  }
+}
+</pre>
+
+<p></code></p>
+
+<p>Because we're Dependency Injecting the store with <code>@inject</code>, we can do this in many different ViewModels and know we're getting the same instance everywhere, meaning we can just <code>store.subscribe()</code> and <code>store.dispatcher.dispatch()</code> in many places and know everything is talking to the same <code>store</code>.</p>
+
+<p>Let me know if you found this easy to follow or have any questions, I've only recently started writing these kinds of quick tip blog posts!</p>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = 'zensavona';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+        </div>
+      
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zen.id.au/js/docs.min.js"></script>
+<script src="https://zen.id.au/js/main.js"></script>
+
+<script src="https://zen.id.au/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
