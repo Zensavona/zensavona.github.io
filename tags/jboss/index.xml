@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jboss on Zen Savona</title>
+    <link>https://zen.id.au/tags/jboss/index.xml</link>
+    <description>Recent content in Jboss on Zen Savona</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-au</language>
+    <atom:link href="https://zen.id.au/tags/jboss/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Using React Hot Module Reloading with JBoss (or any other server software)</title>
+      <link>https://zen.id.au/using-react-hot-module-reloading-with-jboss-or-any-other-server-software</link>
+      <pubDate>Mon, 20 Feb 2017 12:09:14 +1100</pubDate>
+      
+      <guid>https://zen.id.au/using-react-hot-module-reloading-with-jboss-or-any-other-server-software</guid>
+      <description>
+
+&lt;p&gt;Recently at work I have been developing a JavaScript application which talks to a JBoss (Java) based API. This application is deployed and served by JBoss and previously the way I was doing development was having a &lt;code&gt;webpack&lt;/code&gt; watch script with &lt;code&gt;npm&lt;/code&gt;, and then &lt;code&gt;rsync&lt;/code&gt; the built files to the directory the Java server serves them from. This is mostly because of CORS and JBoss SSO only working for specific domains (and by extension, ports).&lt;/p&gt;
+
+&lt;p&gt;Recently I realised that I can actually improve my workflow significantly with HMR (Hot Module Reloading) and that it is totally possible to do without using node to serve your &lt;code&gt;index.html&lt;/code&gt; (or anything).&lt;/p&gt;
+
+&lt;h3 id=&#34;ok-so-how-do-we-do-it&#34;&gt;Ok, so how do we do it?&lt;/h3&gt;
+
+&lt;p&gt;First up you&amp;rsquo;ll need different &lt;code&gt;index.html&lt;/code&gt; files to host your JS code for development and production. This is true for any HMR setup.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take a look at the &lt;a href=&#34;http://webpack.github.io/docs/webpack-dev-server.html#combining-with-an-existing-server&#34;&gt;relevant section of the Webpack docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;What this is basically telling us, is that normally &lt;code&gt;webpack-dev-server&lt;/code&gt; serves both the inital &lt;code&gt;index.html&lt;/code&gt; file with a link to a url which serves the hot loaded code, and the actual code as we change it. These are by default served on ports 8080 and 9090. What we want to do is half of that. We still want to serve the hot loaded code, but not the &lt;code&gt;index.html&lt;/code&gt; as we will serve that ourselves with our own webserver (in my case JBoss).&lt;/p&gt;
+
+&lt;p&gt;This guide assumes you have a basic &lt;code&gt;webpack 1.x&lt;/code&gt; setup already going. If you don&amp;rsquo;t, you can refer to &lt;a href=&#34;http://blog.tamizhvendan.in/blog/2015/11/23/a-beginner-guide-to-setup-react-dot-js-environment-using-babel-6-and-webpack/&#34;&gt;this guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;installing-dependencies&#34;&gt;Installing dependencies&lt;/h3&gt;
+
+&lt;p&gt;We need to install (if you don&amp;rsquo;t already have them) &lt;code&gt;html-webpack-plugin&lt;/code&gt;, &lt;code&gt;webpack-dev-middleware&lt;/code&gt;, &lt;code&gt;webpack-dev-server&lt;/code&gt; and &lt;code&gt;webpack-hot-middleware&lt;/code&gt;, &lt;code&gt;url-loader&lt;/code&gt;, &lt;code&gt;style-loader&lt;/code&gt;, &lt;code&gt;file-loader&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can just run &lt;code&gt;npm install --save-dev webpack-hot-middleware webpack-dev-server webpack-dev-middleware html-webpack-plugin style-loader file-loader url-loader&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;webpack-config&#34;&gt;Webpack Config&lt;/h3&gt;
+
+&lt;p&gt;Next we&amp;rsquo;ll update our &lt;code&gt;webpack.conf.js&lt;/code&gt; to run the dev server and do HMR!&lt;/p&gt;
+
+&lt;p&gt;Below is a simple example of a &lt;code&gt;webpack.conf.js&lt;/code&gt;, you can copy and paste bits that look different into your own.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;This configuration makes a few assumptions:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Your built files will be output to &lt;code&gt;dist/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Your source files live in &lt;code&gt;src/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Your application entrypoint is &lt;code&gt;src/main.{js, jsx}&lt;/code&gt; (can have either js or jsx extension)&lt;/li&gt;
+&lt;li&gt;There exists a file in the same folder as this config file called &lt;code&gt;index.ejs&lt;/code&gt; (we&amp;rsquo;ll get to this in just a sec)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;var webpack = require(&#39;webpack&#39;);
+var path = require(&#39;path&#39;);
+var HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);
+
+var BUILD_DIR = path.resolve(__dirname, &#39;dist&#39;);
+var APP_DIR = path.resolve(__dirname, &#39;src&#39;);
+
+var config = {
+  devtool: &#39;eval&#39;,
+  entry: [
+    &amp;quot;webpack-dev-server/client?http://localhost:9090&amp;quot;,
+    &amp;quot;webpack/hot/only-dev-server&amp;quot;,
+    &#39;babel-polyfill&#39;,
+    APP_DIR + &#39;/main&#39;
+  ],
+  output: {
+    path: BUILD_DIR,
+    filename: &#39;bundle.js&#39;,
+    publicPath: &amp;quot;http://localhost:9090/&amp;quot;
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: &#39;index.ejs&#39;
+    })
+  ],
+  devServer: { inline: true },
+  module : {
+    loaders : [
+      {
+        test : /\.jsx?$/,
+        include : APP_DIR,
+        loaders : [&#39;react-hot&#39;, &#39;babel&#39;]
+      },
+      {
+        test: /\.css$/,
+        loader: &#39;style!css?sourceMap&#39;
+      }, {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &amp;quot;url?limit=10000&amp;amp;mimetype=application/font-woff&amp;quot;
+      }, {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &amp;quot;url?limit=10000&amp;amp;mimetype=application/font-woff&amp;quot;
+      }, {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &amp;quot;url?limit=10000&amp;amp;mimetype=application/octet-stream&amp;quot;
+      }, {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &amp;quot;file&amp;quot;
+      }, {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &amp;quot;url?limit=10000&amp;amp;mimetype=image/svg+xml&amp;quot;
+      }
+    ]
+  },
+  resolve: {
+    extensions: [&#39;&#39;, &#39;.js&#39;, &#39;.jsx&#39;, &#39;.css&#39;]
+  }
+};
+
+module.exports = config;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;index-ejs&#34;&gt;index.ejs&lt;/h3&gt;
+
+&lt;p&gt;This is basically a template &lt;code&gt;webpack&lt;/code&gt; uses to inject the markup required for hot loading. It is basically just a html file (it can &lt;a href=&#34;https://github.com/jantimon/html-webpack-plugin#configuration&#34;&gt;output some variables&lt;/a&gt;) which serves your bundle.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
+    &amp;lt;title&amp;gt;My Application&amp;lt;/title&amp;gt;
+    &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&amp;gt;
+    &amp;lt;!-- imported CSS are concatenated and added automatically --&amp;gt;
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body&amp;gt;
+    &amp;lt;div id=&amp;quot;app&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;the-hmr-server&#34;&gt;The HMR Server&lt;/h3&gt;
+
+&lt;p&gt;Next, we need to install express (&lt;code&gt;npm install --save-dev express&lt;/code&gt;) and create a file called &lt;code&gt;server.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;What this does is actually serve the bundled file for &lt;code&gt;webpack-dev-server&lt;/code&gt; to send through to the page every time we make a change. I also have mine serve a &lt;code&gt;style.css&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var express = require(&#39;express&#39;);
+var app = express();
+
+// Serve application file
+app.get(&#39;/bundle.js&#39;, function(req, res) {
+  res.sendFile(__dirname + &#39;/dist/bundle.js&#39;);
+});
+
+// Serve aggregate stylesheet
+app.get(&#39;/style.css&#39;, function(req, res) {
+  res.sendFile(__dirname + &#39;/build/style.css&#39;);
+});
+
+app.use(express.static(&#39;dev-public&#39;));
+
+
+// Serve index page
+app.get(&#39;*&#39;, function(req, res) {
+  res.sendFile(__dirname + &#39;/dist/index.html&#39;);
+});
+
+if (!process.env.PRODUCTION) {
+  var webpack = require(&#39;webpack&#39;);
+  var WebpackDevServer = require(&#39;webpack-dev-server&#39;);
+  var config = require(&#39;./webpack.config&#39;);
+
+  new WebpackDevServer(webpack(config), {
+    publicPath: config.output.publicPath,
+    hot: true,
+    noInfo: true,
+    historyApiFallback: true
+  }).listen(9090, &#39;localhost&#39;, function (err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;npm-script-starting-things-up&#34;&gt;NPM Script &amp;amp; Starting Things Up&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s make a new entry in the &lt;code&gt;scripts&lt;/code&gt; section of our &lt;code&gt;package.json&lt;/code&gt; that looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;quot;server&amp;quot;: &amp;quot;webpack --progress -p &amp;amp;&amp;amp; node server.js&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then run &lt;code&gt;npm run server&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lastly, we need to copy the &lt;code&gt;index.html&lt;/code&gt; file from our &lt;code&gt;dist/&lt;/code&gt; directory to wherever the webserver (in my case, JBoss) is looking for it. This could be in a &lt;code&gt;.war/&lt;/code&gt; folder/file somewhere on your filesystem. This method works for pretty much any kind of webserver!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Let me know in the comments below if this worked for you, or if you need any more help with it!&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zen.id.au/using-react-hot-module-reloading-with-jboss-or-any-other-server-software</loc>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zen.id.au/now/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
   </url>
@@ -88,12 +93,24 @@
   
   <url>
     <loc>https://zen.id.au/blog/</loc>
-    <lastmod>2016-03-17T12:46:52+11:00</lastmod>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zen.id.au/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/tags/hot-module-reloading/</loc>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/tags/jboss/</loc>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -104,8 +121,19 @@
   </url>
   
   <url>
+    <loc>https://zen.id.au/tags/react/</loc>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zen.id.au/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zen.id.au/</loc>
-    <lastmod>2016-10-02T22:55:05-04:00</lastmod>
+    <lastmod>2017-02-20T12:09:14+11:00</lastmod>
     <priority>0</priority>
   </url>
   

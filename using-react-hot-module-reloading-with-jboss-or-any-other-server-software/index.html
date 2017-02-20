@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en-au">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="map[]" />
+    <meta name="description" content="Zen&#39;s personal site and blog">
+    <link rel="shortcut icon" type="image/x-icon" href="https://zen.id.au/img/favicon.ico">
+    <title>Using React Hot Module Reloading with JBoss (or any other server software)</title>
+    <meta name="generator" content="Hugo 0.18.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://zen.id.au/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-16059324-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="https://zen.id.au/"><i class="fa fa-home"></i></a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/now">WHAT I&#39;M WORKING ON</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="https://zen.id.au/using-react-hot-module-reloading-with-jboss-or-any-other-server-software">Using React Hot Module Reloading with JBoss (or any other server software)</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          February 20, 2017
+            &nbsp;&nbsp;
+            
+            <span class="label label-success">react</span>
+            
+            <span class="label label-success">jboss</span>
+            
+            <span class="label label-success">hot module reloading</span>
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+<p>Recently at work I have been developing a JavaScript application which talks to a JBoss (Java) based API. This application is deployed and served by JBoss and previously the way I was doing development was having a <code>webpack</code> watch script with <code>npm</code>, and then <code>rsync</code> the built files to the directory the Java server serves them from. This is mostly because of CORS and JBoss SSO only working for specific domains (and by extension, ports).</p>
+
+<p>Recently I realised that I can actually improve my workflow significantly with HMR (Hot Module Reloading) and that it is totally possible to do without using node to serve your <code>index.html</code> (or anything).</p>
+
+<h3 id="ok-so-how-do-we-do-it">Ok, so how do we do it?</h3>
+
+<p>First up you&rsquo;ll need different <code>index.html</code> files to host your JS code for development and production. This is true for any HMR setup.</p>
+
+<p>Let&rsquo;s take a look at the <a href="http://webpack.github.io/docs/webpack-dev-server.html#combining-with-an-existing-server">relevant section of the Webpack docs</a>.</p>
+
+<p>What this is basically telling us, is that normally <code>webpack-dev-server</code> serves both the inital <code>index.html</code> file with a link to a url which serves the hot loaded code, and the actual code as we change it. These are by default served on ports 8080 and 9090. What we want to do is half of that. We still want to serve the hot loaded code, but not the <code>index.html</code> as we will serve that ourselves with our own webserver (in my case JBoss).</p>
+
+<p>This guide assumes you have a basic <code>webpack 1.x</code> setup already going. If you don&rsquo;t, you can refer to <a href="http://blog.tamizhvendan.in/blog/2015/11/23/a-beginner-guide-to-setup-react-dot-js-environment-using-babel-6-and-webpack/">this guide</a>.</p>
+
+<h3 id="installing-dependencies">Installing dependencies</h3>
+
+<p>We need to install (if you don&rsquo;t already have them) <code>html-webpack-plugin</code>, <code>webpack-dev-middleware</code>, <code>webpack-dev-server</code> and <code>webpack-hot-middleware</code>, <code>url-loader</code>, <code>style-loader</code>, <code>file-loader</code>.</p>
+
+<p>You can just run <code>npm install --save-dev webpack-hot-middleware webpack-dev-server webpack-dev-middleware html-webpack-plugin style-loader file-loader url-loader</code></p>
+
+<h3 id="webpack-config">Webpack Config</h3>
+
+<p>Next we&rsquo;ll update our <code>webpack.conf.js</code> to run the dev server and do HMR!</p>
+
+<p>Below is a simple example of a <code>webpack.conf.js</code>, you can copy and paste bits that look different into your own.</p>
+
+<p><strong>This configuration makes a few assumptions:</strong></p>
+
+<ul>
+<li>Your built files will be output to <code>dist/</code></li>
+<li>Your source files live in <code>src/</code></li>
+<li>Your application entrypoint is <code>src/main.{js, jsx}</code> (can have either js or jsx extension)</li>
+<li>There exists a file in the same folder as this config file called <code>index.ejs</code> (we&rsquo;ll get to this in just a sec)</li>
+</ul>
+
+<pre><code>var webpack = require('webpack');
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'src');
+
+var config = {
+  devtool: 'eval',
+  entry: [
+    &quot;webpack-dev-server/client?http://localhost:9090&quot;,
+    &quot;webpack/hot/only-dev-server&quot;,
+    'babel-polyfill',
+    APP_DIR + '/main'
+  ],
+  output: {
+    path: BUILD_DIR,
+    filename: 'bundle.js',
+    publicPath: &quot;http://localhost:9090/&quot;
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.ejs'
+    })
+  ],
+  devServer: { inline: true },
+  module : {
+    loaders : [
+      {
+        test : /\.jsx?$/,
+        include : APP_DIR,
+        loaders : ['react-hot', 'babel']
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css?sourceMap'
+      }, {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &quot;url?limit=10000&amp;mimetype=application/font-woff&quot;
+      }, {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &quot;url?limit=10000&amp;mimetype=application/font-woff&quot;
+      }, {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &quot;url?limit=10000&amp;mimetype=application/octet-stream&quot;
+      }, {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &quot;file&quot;
+      }, {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: &quot;url?limit=10000&amp;mimetype=image/svg+xml&quot;
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.css']
+  }
+};
+
+module.exports = config;
+</code></pre>
+
+<h3 id="index-ejs">index.ejs</h3>
+
+<p>This is basically a template <code>webpack</code> uses to inject the markup required for hot loading. It is basically just a html file (it can <a href="https://github.com/jantimon/html-webpack-plugin#configuration">output some variables</a>) which serves your bundle.</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;My Application&lt;/title&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;!-- imported CSS are concatenated and added automatically --&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h3 id="the-hmr-server">The HMR Server</h3>
+
+<p>Next, we need to install express (<code>npm install --save-dev express</code>) and create a file called <code>server.js</code></p>
+
+<p>What this does is actually serve the bundled file for <code>webpack-dev-server</code> to send through to the page every time we make a change. I also have mine serve a <code>style.css</code> file.</p>
+
+<pre><code>var express = require('express');
+var app = express();
+
+// Serve application file
+app.get('/bundle.js', function(req, res) {
+  res.sendFile(__dirname + '/dist/bundle.js');
+});
+
+// Serve aggregate stylesheet
+app.get('/style.css', function(req, res) {
+  res.sendFile(__dirname + '/build/style.css');
+});
+
+app.use(express.static('dev-public'));
+
+
+// Serve index page
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + '/dist/index.html');
+});
+
+if (!process.env.PRODUCTION) {
+  var webpack = require('webpack');
+  var WebpackDevServer = require('webpack-dev-server');
+  var config = require('./webpack.config');
+
+  new WebpackDevServer(webpack(config), {
+    publicPath: config.output.publicPath,
+    hot: true,
+    noInfo: true,
+    historyApiFallback: true
+  }).listen(9090, 'localhost', function (err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+</code></pre>
+
+<h3 id="npm-script-starting-things-up">NPM Script &amp; Starting Things Up</h3>
+
+<p>Let&rsquo;s make a new entry in the <code>scripts</code> section of our <code>package.json</code> that looks like this:</p>
+
+<pre><code>&quot;server&quot;: &quot;webpack --progress -p &amp;&amp; node server.js&quot;
+</code></pre>
+
+<p>Then run <code>npm run server</code>.</p>
+
+<p>Lastly, we need to copy the <code>index.html</code> file from our <code>dist/</code> directory to wherever the webserver (in my case, JBoss) is looking for it. This could be in a <code>.war/</code> folder/file somewhere on your filesystem. This method works for pretty much any kind of webserver!</p>
+
+<p><strong>Let me know in the comments below if this worked for you, or if you need any more help with it!</strong></p>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = 'zensavona';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+        </div>
+      
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zen.id.au/js/docs.min.js"></script>
+<script src="https://zen.id.au/js/main.js"></script>
+
+<script src="https://zen.id.au/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
